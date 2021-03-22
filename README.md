@@ -2,79 +2,112 @@
 
 # Book CRUD REST API:  WeCan Technical Assignment submission. 
 
-A RESTful API that follows an MVC architecture, which allows users to add / edit / remove books from their own book lists or to transfer books between each other.  No actual database is used, but a "UserBank" object instance is used globally in runtime to store and manage users.  Consequently, no data persistence exists when the runtime is terminated and the user list will refresh. 
+A RESTful API that follows an MVC architecture, which allows users to add / edit / remove books from their own book lists or to transfer books between each other.  No actual database is used, but a "UserBank" object instance is used globally in runtime to store and manage users.  Consequently, no data persistence exists when the runtime is terminated and the user list will refresh. Developed using TypeScript and Node/ExpressJS. 
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 
-### Getting started
+### Setting up the development environment: 
 
-To pull the project from the repo, use: 
+1.  To pull the project from the repo, use: 
 
 ```
 git clone https://github.com/david-barth/WeCan-RESTAPI
 ```
 
-And repeat
+2.  In the root of the local repo clone, use: 
 
 ```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+(OPTIONAL):  If a production build is desired, create a "dist" directory with: 
 
 ```
-Give an example
+mkdir build 
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+and then run the command : 
 
 ```
-Give an example
+npm run build
 ```
 
-## Deployment
 
-Add additional notes about how to deploy this on a live system
+3. To run the development server, run: 
 
-## Built With
+```
+npm run dev
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-## Contributing
+## Models: 
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+1. UserBank: Stores users in an array of User objects, acting as a defacto database. 
 
-## Versioning
+```
+Members: 
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+users : User[]
+```
 
-## Authors
+2. User: Stores books in an array of Book objects. Contains CRUD methods for manipulating book objects in the book list
+ 
+```
+Members: 
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+bookList : Book[];
+username : string; 
+```
+ 
+ 
+3. Book: Contains author and titles of real world books: 
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+```
+Members: 
 
-## License
+title : string; 
+author : string; 
+```
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgments
+## Routes: 
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+A.  Create a new book: 
+
+```
+POST: '/user/:username/transferBook'
+```
+
+B. Retrieve the current book list of the user: 
+
+```
+GET: '/user/:username/getBooks'
+```
+
+C. Edit the title or author of the book: 
+
+```
+PATCH: '/user/:username/editBook'
+```
+
+D. Delete a book from the user's book list: 
+
+```
+DELETE: '/user/:username/deleteBook'
+```
+
+E. Create a new user and add them to the UserBank: 
+
+```
+POST: '/user/:newUsername'
+```
+
+
+F. Copy / transfer a book from one user's book list to the book list of another user: 
+
+```
+GET: '/user/:username/transferBook'
+```
